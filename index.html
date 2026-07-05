@@ -3,450 +3,627 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aurora — Transforme suas ideias em realidade</title>
-  <meta name="description" content="Aurora é a plataforma que ajuda você a tirar projetos do papel com rapidez e simplicidade." />
+  <title>Lastro — Inteligência Comercial B2B</title>
+  <meta name="description" content="Consultoria de inteligência comercial para empresas B2B: dimensionamento de mercado, pricing, segmentação de clientes e rotina de decisão baseada em dados." />
+  <meta property="og:title" content="Lastro — Inteligência Comercial B2B" />
+  <meta property="og:description" content="Dados de mercado que viram decisão de receita. Diagnóstico comercial para indústrias, distribuidoras e empresas de tecnologia." />
   <style>
     :root {
-      --bg: #0d0d1a;
-      --surface: #16162b;
-      --surface-2: #1e1e38;
-      --text: #f0f0f8;
-      --muted: #a0a0bc;
-      --primary: #7c5cff;
-      --primary-hover: #9378ff;
-      --accent: #ff5c8a;
-      --radius: 16px;
+      --paper: #f7f6f2;
+      --paper-2: #efede6;
+      --ink: #1b1d1e;
+      --ink-soft: #4c5257;
+      --line: #d9d5ca;
+      --brand: #17564a;
+      --brand-dark: #0e3d34;
+      --brand-tint: #e3ece8;
+      --serif: Georgia, 'Times New Roman', serif;
+      --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      line-height: 1.6;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .container {
-      width: min(1100px, 92%);
-      margin: 0 auto;
-    }
+    .wrap { width: min(1120px, 90%); margin: 0 auto; }
 
-    /* ===== Header ===== */
+    h1, h2, h3 { font-family: var(--serif); font-weight: 500; letter-spacing: -0.015em; }
+
+    a { color: inherit; }
+
+    ::selection { background: var(--brand); color: #fff; }
+
+    /* ---------- header ---------- */
     header {
+      border-bottom: 1px solid var(--line);
+      background: var(--paper);
       position: sticky;
       top: 0;
-      z-index: 10;
-      background: rgba(13, 13, 26, 0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      z-index: 20;
     }
 
-    .nav {
+    .topbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1rem 0;
+      padding: 1.1rem 0;
     }
 
-    .logo {
-      font-size: 1.4rem;
-      font-weight: 700;
+    .wordmark {
+      font-family: var(--serif);
+      font-size: 1.45rem;
       text-decoration: none;
-      color: var(--text);
-    }
-
-    .logo span {
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 1.5rem;
-      align-items: center;
-    }
-
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.95rem;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover {
-      color: var(--text);
-    }
-
-    /* ===== Botões ===== */
-    .btn {
-      display: inline-block;
-      padding: 0.75rem 1.75rem;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      color: #fff;
-      box-shadow: 0 4px 20px rgba(124, 92, 255, 0.35);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 28px rgba(124, 92, 255, 0.5);
-    }
-
-    .btn-ghost {
-      color: var(--text);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .btn-ghost:hover {
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    /* ===== Hero ===== */
-    .hero {
-      padding: 6rem 0 5rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -40%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 700px;
-      height: 700px;
-      background: radial-gradient(circle, rgba(124, 92, 255, 0.25), transparent 65%);
-      pointer-events: none;
-    }
-
-    .hero-badge {
-      display: inline-block;
-      padding: 0.35rem 1rem;
-      border-radius: 999px;
-      background: rgba(124, 92, 255, 0.15);
-      border: 1px solid rgba(124, 92, 255, 0.4);
-      color: var(--primary-hover);
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero h1 {
-      font-size: clamp(2.2rem, 5.5vw, 3.8rem);
-      line-height: 1.15;
-      margin-bottom: 1.25rem;
       letter-spacing: -0.02em;
     }
 
-    .hero h1 span {
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .wordmark::after { content: '.'; color: var(--brand); }
+
+    .menu { display: flex; align-items: center; gap: 2rem; }
+
+    .menu a {
+      text-decoration: none;
+      font-size: 0.92rem;
+      color: var(--ink-soft);
     }
 
-    .hero p {
-      font-size: 1.15rem;
-      color: var(--muted);
-      max-width: 620px;
-      margin: 0 auto 2.5rem;
-    }
+    .menu a:hover { color: var(--ink); }
 
-    .hero-actions {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    /* ===== Recursos ===== */
-    .section {
-      padding: 5rem 0;
-    }
-
-    .section-title {
-      text-align: center;
-      font-size: clamp(1.8rem, 4vw, 2.5rem);
-      margin-bottom: 0.75rem;
-    }
-
-    .section-subtitle {
-      text-align: center;
-      color: var(--muted);
-      max-width: 560px;
-      margin: 0 auto 3.5rem;
-    }
-
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .feature-card {
-      background: var(--surface);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: var(--radius);
-      padding: 2rem;
-      transition: transform 0.25s, border-color 0.25s;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(124, 92, 255, 0.5);
-    }
-
-    .feature-icon {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    .feature-card h3 {
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .feature-card p {
-      color: var(--muted);
+    .btn {
+      display: inline-block;
+      text-decoration: none;
       font-size: 0.95rem;
+      font-weight: 600;
+      padding: 0.7rem 1.4rem;
+      border: 1px solid var(--brand);
+      transition: background 0.15s, color 0.15s;
     }
 
-    /* ===== Depoimentos ===== */
-    .testimonials {
+    .btn-solid { background: var(--brand); color: #fff; }
+    .btn-solid:hover { background: var(--brand-dark); border-color: var(--brand-dark); }
+    .btn-line { color: var(--brand); }
+    .btn-line:hover { background: var(--brand-tint); }
+
+    .menu .btn { padding: 0.55rem 1.1rem; font-size: 0.88rem; }
+
+    /* ---------- hero ---------- */
+    .hero { padding: 5.5rem 0 4.5rem; }
+
+    .hero-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+      gap: 4rem;
+      align-items: end;
     }
 
-    .testimonial {
-      background: var(--surface-2);
-      border-radius: var(--radius);
-      padding: 2rem;
-    }
-
-    .testimonial p {
-      font-style: italic;
-      color: var(--text);
+    .eyebrow {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--brand);
       margin-bottom: 1.25rem;
     }
 
-    .testimonial-author {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
+    .hero h1 {
+      font-size: clamp(2.1rem, 4.4vw, 3.4rem);
+      line-height: 1.12;
+      margin-bottom: 1.5rem;
     }
 
-    .avatar {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      color: #fff;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
+    .hero h1 em { font-style: italic; color: var(--brand); }
+
+    .hero .lead {
+      font-size: 1.1rem;
+      color: var(--ink-soft);
+      max-width: 34em;
+      margin-bottom: 2.25rem;
     }
 
-    .testimonial-author strong {
+    .hero-actions { display: flex; gap: 0.9rem; flex-wrap: wrap; }
+
+    .hero-note { margin-top: 1rem; font-size: 0.85rem; color: var(--ink-soft); }
+
+    /* painel de indicadores */
+    .kpi-panel {
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .kpi-panel header {
+      position: static;
+      border-bottom: 1px solid var(--line);
+      background: var(--paper-2);
+      padding: 0.7rem 1.25rem;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-soft);
+    }
+
+    .kpi { padding: 1.1rem 1.25rem; border-bottom: 1px solid var(--line); }
+    .kpi:last-child { border-bottom: none; }
+
+    .kpi strong {
       display: block;
+      font-family: var(--serif);
+      font-size: 1.9rem;
+      line-height: 1.1;
+    }
+
+    .kpi span { font-size: 0.88rem; color: var(--ink-soft); }
+
+    /* ---------- faixa de setores ---------- */
+    .sectors {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--paper-2);
+      padding: 1.1rem 0;
+    }
+
+    .sectors p {
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      text-align: center;
+    }
+
+    .sectors strong { color: var(--ink); font-weight: 600; }
+
+    /* ---------- seções ---------- */
+    .section { padding: 5rem 0; }
+
+    .section-head { max-width: 38em; margin-bottom: 3.25rem; }
+
+    .section-head h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); margin-bottom: 0.9rem; }
+
+    .section-head p { color: var(--ink-soft); }
+
+    /* serviços */
+    .services {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .service {
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 1.9rem 1.9rem 2.1rem;
+      background: var(--paper);
+    }
+
+    .service:hover { background: #fff; }
+
+    .service .num {
+      font-family: var(--serif);
       font-size: 0.95rem;
+      color: var(--brand);
+      display: block;
+      margin-bottom: 0.9rem;
     }
 
-    .testimonial-author small {
-      color: var(--muted);
+    .service h3 { font-size: 1.22rem; margin-bottom: 0.55rem; }
+
+    .service p { font-size: 0.95rem; color: var(--ink-soft); }
+
+    /* método */
+    .method { background: var(--ink); color: var(--paper); }
+
+    .method .section-head h2 { color: #fff; }
+    .method .section-head p { color: #b8bcbf; }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2.5rem;
     }
 
-    /* ===== CTA final ===== */
-    .cta {
-      text-align: center;
-      background: linear-gradient(135deg, rgba(124, 92, 255, 0.18), rgba(255, 92, 138, 0.12));
-      border: 1px solid rgba(124, 92, 255, 0.3);
-      border-radius: calc(var(--radius) * 1.5);
-      padding: 4rem 2rem;
+    .step { border-top: 2px solid var(--brand); padding-top: 1.4rem; }
+
+    .step .phase {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #9aa0a4;
+      display: block;
+      margin-bottom: 0.6rem;
     }
 
-    .cta h2 {
-      font-size: clamp(1.8rem, 4vw, 2.4rem);
-      margin-bottom: 1rem;
+    .step h3 { font-size: 1.15rem; color: #fff; margin-bottom: 0.5rem; }
+
+    .step p { font-size: 0.9rem; color: #b8bcbf; }
+
+    /* caso */
+    .case-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      gap: 4rem;
+      align-items: start;
     }
 
-    .cta p {
-      color: var(--muted);
-      margin-bottom: 2rem;
+    .case-tag {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--brand);
+      border: 1px solid var(--brand);
+      padding: 0.3rem 0.8rem;
+      margin-bottom: 1.4rem;
     }
 
-    /* ===== Rodapé ===== */
-    footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      padding: 2.5rem 0;
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.9rem;
+    .case-grid h2 { font-size: clamp(1.6rem, 2.8vw, 2.1rem); margin-bottom: 1.1rem; }
+
+    .case-grid .case-body p { color: var(--ink-soft); margin-bottom: 1rem; }
+
+    .case-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
     }
 
-    footer a {
-      color: var(--primary-hover);
-      text-decoration: none;
+    .metric { background: #fff; padding: 1.75rem 1.5rem; }
+
+    .metric strong {
+      display: block;
+      font-family: var(--serif);
+      font-size: 2.3rem;
+      line-height: 1.1;
+      color: var(--brand);
     }
 
-    footer a:hover {
-      text-decoration: underline;
+    .metric span { font-size: 0.88rem; color: var(--ink-soft); }
+
+    blockquote {
+      border-left: 3px solid var(--brand);
+      padding-left: 1.5rem;
+      margin-top: 2.5rem;
     }
 
-    @media (max-width: 600px) {
-      .nav-links a:not(.btn) {
-        display: none;
-      }
+    blockquote p {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.15rem;
+      margin-bottom: 0.75rem;
+    }
 
-      .hero {
-        padding: 4rem 0 3.5rem;
-      }
+    blockquote footer { font-size: 0.88rem; color: var(--ink-soft); }
+
+    /* faq */
+    .faq { max-width: 720px; }
+
+    details {
+      border-bottom: 1px solid var(--line);
+      padding: 1.3rem 0;
+    }
+
+    details:first-of-type { border-top: 1px solid var(--line); }
+
+    summary {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    summary::after { content: '+'; color: var(--brand); font-size: 1.3rem; flex-shrink: 0; }
+
+    details[open] summary::after { content: '–'; }
+
+    details p { margin-top: 0.9rem; color: var(--ink-soft); font-size: 0.97rem; max-width: 60ch; }
+
+    /* cta final */
+    .closing { background: var(--brand); color: #fff; }
+
+    .closing .inner {
+      display: grid;
+      grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .closing h2 { font-size: clamp(1.8rem, 3.2vw, 2.5rem); margin-bottom: 1rem; }
+
+    .closing p { color: #cfe0da; max-width: 34em; }
+
+    .closing .btn {
+      background: #fff;
+      color: var(--brand-dark);
+      border-color: #fff;
+      font-size: 1rem;
+      padding: 0.9rem 1.9rem;
+    }
+
+    .closing .btn:hover { background: var(--paper-2); }
+
+    .closing .cta-side { text-align: right; }
+
+    .closing .cta-side small {
+      display: block;
+      margin-top: 0.8rem;
+      color: #cfe0da;
+      font-size: 0.82rem;
+    }
+
+    /* footer */
+    .footer { padding: 2.5rem 0; }
+
+    .footer .inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 2rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+      color: var(--ink-soft);
+    }
+
+    .footer a { color: var(--ink-soft); }
+
+    /* ---------- responsivo ---------- */
+    @media (max-width: 860px) {
+      .menu a:not(.btn) { display: none; }
+      .hero { padding: 3.5rem 0 3rem; }
+      .hero-grid, .case-grid, .closing .inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      .services { grid-template-columns: 1fr; }
+      .closing .cta-side { text-align: left; }
+    }
+
+    @media (max-width: 520px) {
+      .steps { grid-template-columns: 1fr; }
+      .case-metrics { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <header>
-    <div class="container nav">
-      <a href="#" class="logo">✦ <span>Aurora</span></a>
-      <nav class="nav-links">
-        <a href="#recursos">Recursos</a>
-        <a href="#depoimentos">Depoimentos</a>
-        <a href="#contato" class="btn btn-primary" style="padding: 0.5rem 1.25rem; font-size: 0.9rem;">Começar</a>
+    <div class="wrap topbar">
+      <a class="wordmark" href="#">Lastro</a>
+      <nav class="menu">
+        <a href="#servicos">Serviços</a>
+        <a href="#metodo">Método</a>
+        <a href="#resultados">Resultados</a>
+        <a href="#faq">Perguntas frequentes</a>
+        <a href="#contato" class="btn btn-solid">Agendar diagnóstico</a>
       </nav>
     </div>
   </header>
 
   <main>
     <section class="hero">
-      <div class="container">
-        <span class="hero-badge">🚀 Novidade — versão 2.0 disponível</span>
-        <h1>Transforme suas ideias<br /><span>em realidade</span></h1>
-        <p>
-          Aurora é a plataforma que ajuda você a tirar projetos do papel com
-          rapidez, simplicidade e o melhor design. Comece gratuitamente em minutos.
-        </p>
-        <div class="hero-actions">
-          <a href="#contato" class="btn btn-primary">Começar agora</a>
-          <a href="#recursos" class="btn btn-ghost">Saiba mais</a>
+      <div class="wrap hero-grid">
+        <div>
+          <p class="eyebrow">Inteligência comercial para empresas B2B</p>
+          <h1>Sua área comercial decide com dados — <em>ou decide no escuro</em>.</h1>
+          <p class="lead">
+            A Lastro estrutura a inteligência de mercado de indústrias, distribuidoras e
+            empresas de tecnologia: dimensionamos o mercado endereçável, mapeamos a
+            concorrência e transformamos a base de clientes em critério claro de
+            priorização para o time de vendas.
+          </p>
+          <div class="hero-actions">
+            <a href="#contato" class="btn btn-solid">Agendar diagnóstico gratuito</a>
+            <a href="#metodo" class="btn btn-line">Conhecer o método</a>
+          </div>
+          <p class="hero-note">Diagnóstico inicial de 45 minutos, sem compromisso. Resposta em até um dia útil.</p>
         </div>
+
+        <aside class="kpi-panel" aria-label="Indicadores típicos de projeto">
+          <header>Resultados típicos em 6 meses</header>
+          <div class="kpi">
+            <strong>+22%</strong>
+            <span>de conversão em propostas ao priorizar contas pelo ICP</span>
+          </div>
+          <div class="kpi">
+            <strong>−31%</strong>
+            <span>de tempo do time de vendas gasto com contas fora do perfil</span>
+          </div>
+          <div class="kpi">
+            <strong>4 a 6 sem.</strong>
+            <span>do kickoff à primeira rotina de decisão implantada</span>
+          </div>
+        </aside>
       </div>
     </section>
 
-    <section id="recursos" class="section">
-      <div class="container">
-        <h2 class="section-title">Tudo que você precisa</h2>
-        <p class="section-subtitle">
-          Recursos pensados para acelerar seu trabalho do primeiro rascunho ao lançamento.
-        </p>
-        <div class="features">
-          <div class="feature-card">
-            <div class="feature-icon">⚡</div>
-            <h3>Rápido de verdade</h3>
-            <p>Performance otimizada para que nada fique entre você e o seu resultado.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">🎨</div>
-            <h3>Design impecável</h3>
-            <p>Interfaces bonitas e responsivas que funcionam em qualquer dispositivo.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">🔒</div>
-            <h3>Seguro por padrão</h3>
-            <p>Seus dados protegidos com as melhores práticas de segurança do mercado.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">📈</div>
-            <h3>Cresça sem limites</h3>
-            <p>Uma base sólida que escala junto com o seu projeto, do MVP ao sucesso.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">🤝</div>
-            <h3>Suporte dedicado</h3>
-            <p>Time pronto para ajudar sempre que você precisar, sem enrolação.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">🎮</div>
-            <h3>Diversão garantida</h3>
-            <p>Faça uma pausa e <a href="./jogo/" style="color: var(--primary-hover);">jogue o nosso jogo da velha</a> quando quiser.</p>
-          </div>
-        </div>
+    <div class="sectors">
+      <div class="wrap">
+        <p>Experiência em <strong>bens de consumo</strong>, <strong>insumos industriais</strong>, <strong>distribuição e atacado</strong>, <strong>SaaS</strong> e <strong>serviços financeiros</strong>.</p>
       </div>
-    </section>
+    </div>
 
-    <section id="depoimentos" class="section">
-      <div class="container">
-        <h2 class="section-title">Quem usa, recomenda</h2>
-        <p class="section-subtitle">Veja o que as pessoas estão dizendo.</p>
-        <div class="testimonials">
-          <div class="testimonial">
-            <p>"Coloquei meu projeto no ar em uma tarde. Simplesmente incrível."</p>
-            <div class="testimonial-author">
-              <div class="avatar">M</div>
-              <div>
-                <strong>Mariana Silva</strong>
-                <small>Designer de produto</small>
-              </div>
-            </div>
+    <section id="servicos" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>O que entregamos</h2>
+          <p>
+            Projetos com escopo fechado e entregável definido — nada de relatório
+            que ninguém abre. Cada frente termina com uma rotina que o seu time
+            consegue operar sozinho.
+          </p>
+        </div>
+
+        <div class="services">
+          <div class="service">
+            <span class="num">01</span>
+            <h3>Dimensionamento de mercado</h3>
+            <p>TAM, SAM e SOM por região, segmento e porte, com fontes públicas e dados proprietários. Base para meta de expansão e tese de crescimento.</p>
           </div>
-          <div class="testimonial">
-            <p>"A melhor decisão que tomei este ano. Recomendo de olhos fechados."</p>
-            <div class="testimonial-author">
-              <div class="avatar">R</div>
-              <div>
-                <strong>Rafael Costa</strong>
-                <small>Desenvolvedor</small>
-              </div>
-            </div>
+          <div class="service">
+            <span class="num">02</span>
+            <h3>Segmentação e ICP</h3>
+            <p>Definição do perfil de cliente ideal a partir da sua própria carteira: quem compra mais, paga melhor e permanece. Scoring aplicado ao CRM.</p>
           </div>
-          <div class="testimonial">
-            <p>"Suporte excelente e resultado acima do esperado. Nota dez!"</p>
-            <div class="testimonial-author">
-              <div class="avatar">J</div>
-              <div>
-                <strong>Juliana Rocha</strong>
-                <small>Empreendedora</small>
-              </div>
-            </div>
+          <div class="service">
+            <span class="num">03</span>
+            <h3>Inteligência competitiva</h3>
+            <p>Monitoramento estruturado de concorrentes: portfólio, preços praticados, cobertura regional e movimentos relevantes, em ciclo mensal.</p>
+          </div>
+          <div class="service">
+            <span class="num">04</span>
+            <h3>Pricing e política comercial</h3>
+            <p>Análise de elasticidade e dispersão de preços na carteira, desenho de trilhas de desconto e alçadas. Margem defendida sem perder volume.</p>
+          </div>
+          <div class="service">
+            <span class="num">05</span>
+            <h3>Territórios e cobertura</h3>
+            <p>Redesenho de carteiras e territórios de vendas com base em potencial de mercado, não em histórico ou geografia herdada.</p>
+          </div>
+          <div class="service">
+            <span class="num">06</span>
+            <h3>Enriquecimento de base e CRM</h3>
+            <p>Higienização, deduplicação e enriquecimento cadastral da base de clientes e prospects, com governança para não degradar de novo.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="contato" class="section">
-      <div class="container">
-        <div class="cta">
-          <h2>Pronto para começar?</h2>
-          <p>Junte-se a milhares de pessoas que já estão criando com a Aurora.</p>
-          <a href="mailto:paulovitor.sampaio@gmail.com" class="btn btn-primary">Fale com a gente</a>
+    <section id="metodo" class="section method">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Como trabalhamos</h2>
+          <p>
+            Quatro fases, prazos definidos, e um princípio inegociável: análise que
+            não muda uma decisão da diretoria comercial não entra no escopo.
+          </p>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <span class="phase">Semanas 1–2</span>
+            <h3>Diagnóstico</h3>
+            <p>Entrevistas com a liderança comercial, auditoria dos dados existentes e mapeamento das decisões que hoje são tomadas por intuição.</p>
+          </div>
+          <div class="step">
+            <span class="phase">Semanas 3–4</span>
+            <h3>Estruturação</h3>
+            <p>Consolidação das fontes internas e externas em uma base única e confiável. É aqui que a maioria dos projetos de dados morre — o nosso não.</p>
+          </div>
+          <div class="step">
+            <span class="phase">Semanas 5–6</span>
+            <h3>Análise</h3>
+            <p>Respostas às perguntas priorizadas no diagnóstico: onde crescer, o que defender, quanto cobrar, quem atacar primeiro.</p>
+          </div>
+          <div class="step">
+            <span class="phase">Contínuo</span>
+            <h3>Rotina de decisão</h3>
+            <p>Implantação do ritual mensal de leitura dos indicadores com a liderança, até o time operar sem depender da consultoria.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="resultados" class="section">
+      <div class="wrap case-grid">
+        <div class="case-body">
+          <span class="case-tag">Caso · Distribuição</span>
+          <h2>Distribuidora nacional de insumos redesenha territórios e recupera margem</h2>
+          <p>
+            Com 14 filiais e mais de 9.000 clientes ativos, a operação crescia em
+            faturamento e encolhia em margem. O diagnóstico mostrou o padrão: 62%
+            do tempo dos vendedores estava alocado em contas que representavam 11%
+            da margem de contribuição.
+          </p>
+          <p>
+            Reconstruímos a segmentação da carteira, redesenhamos os territórios por
+            potencial e implantamos trilhas de desconto com alçadas. A rotina mensal
+            de leitura passou a rodar com o próprio time após o quarto ciclo.
+          </p>
+          <blockquote>
+            <p>“Foi a primeira vez que a discussão de metas partiu do tamanho real de cada mercado, e não do histórico do vendedor. Mudou o nível da conversa.”</p>
+            <footer>Diretor comercial da operação — nome sob acordo de confidencialidade</footer>
+          </blockquote>
+        </div>
+
+        <div class="case-metrics">
+          <div class="metric">
+            <strong>+18%</strong>
+            <span>de margem de contribuição em 8 meses, sem perda de volume</span>
+          </div>
+          <div class="metric">
+            <strong>−40%</strong>
+            <span>de dispersão de preços entre filiais para o mesmo mix</span>
+          </div>
+          <div class="metric">
+            <strong>27%</strong>
+            <span>da carteira reclassificada e redistribuída entre territórios</span>
+          </div>
+          <div class="metric">
+            <strong>4 ciclos</strong>
+            <span>até a rotina de decisão rodar sem apoio da consultoria</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="section" style="padding-top: 0;">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Perguntas frequentes</h2>
+        </div>
+        <div class="faq">
+          <details>
+            <summary>Nossos dados internos são bagunçados. Isso inviabiliza o projeto?</summary>
+            <p>Não — é o ponto de partida da maioria dos clientes. A fase de estruturação existe exatamente para isso, e parte do valor do projeto é deixar a base organizada com regras para que ela não se degrade de novo.</p>
+          </details>
+          <details>
+            <summary>Em quanto tempo aparecem os primeiros resultados?</summary>
+            <p>As primeiras análises acionáveis saem entre a quarta e a sexta semana. Resultado em margem e conversão depende do ciclo de vendas do seu negócio, mas os casos típicos mostram efeito mensurável entre o terceiro e o oitavo mês.</p>
+          </details>
+          <details>
+            <summary>Isso substitui um BI ou uma equipe interna de dados?</summary>
+            <p>Não substitui — antecede e orienta. O BI mostra o que aconteceu; a inteligência comercial define o que olhar e o que fazer a respeito. Quando o cliente tem equipe interna, trabalhamos junto e transferimos o método para ela.</p>
+          </details>
+          <details>
+            <summary>Como é o modelo de contratação?</summary>
+            <p>Projetos de escopo fechado (6 a 10 semanas) para as frentes de análise, e assinatura mensal opcional para a rotina de inteligência contínua. O diagnóstico inicial é gratuito e sem compromisso.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="contato" class="section closing">
+      <div class="wrap inner">
+        <div>
+          <h2>Comece pelo diagnóstico</h2>
+          <p>
+            Uma conversa de 45 minutos com quem lidera a sua área comercial. Saímos
+            dela com as três perguntas de mercado mais caras que a sua empresa
+            ainda não sabe responder — e você decide se quer respondê-las conosco.
+          </p>
+        </div>
+        <div class="cta-side">
+          <a class="btn" href="mailto:paulovitor.sampaio@gmail.com?subject=Diagn%C3%B3stico%20comercial%20%E2%80%94%20Lastro">Agendar diagnóstico</a>
+          <small>Ou escreva para paulovitor.sampaio@gmail.com</small>
         </div>
       </div>
     </section>
   </main>
 
-  <footer>
-    <div class="container">
-      <p>© 2026 Aurora. Feito com 💜 — <a href="./jogo/">Jogo da Velha</a></p>
+  <footer class="footer">
+    <div class="wrap inner">
+      <span>© 2026 Lastro Inteligência Comercial</span>
+      <span>São Paulo · Atendimento em todo o Brasil</span>
+      <a href="mailto:paulovitor.sampaio@gmail.com">paulovitor.sampaio@gmail.com</a>
     </div>
   </footer>
 </body>
