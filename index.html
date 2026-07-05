@@ -3,357 +3,451 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jogo da Velha</title>
+  <title>Aurora — Transforme suas ideias em realidade</title>
+  <meta name="description" content="Aurora é a plataforma que ajuda você a tirar projetos do papel com rapidez e simplicidade." />
   <style>
+    :root {
+      --bg: #0d0d1a;
+      --surface: #16162b;
+      --surface-2: #1e1e38;
+      --text: #f0f0f8;
+      --muted: #a0a0bc;
+      --primary: #7c5cff;
+      --primary-hover: #9378ff;
+      --accent: #ff5c8a;
+      --radius: 16px;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      min-height: 100vh;
-      background: #1a1a2e;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+    }
+
+    .container {
+      width: min(1100px, 92%);
+      margin: 0 auto;
+    }
+
+    /* ===== Header ===== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(13, 13, 26, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .nav {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      font-family: 'Segoe UI', sans-serif;
-      color: #eee;
+      justify-content: space-between;
+      padding: 1rem 0;
     }
 
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      letter-spacing: 2px;
-      color: #e94560;
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--text);
     }
 
-    .scoreboard {
+    .logo span {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
       display: flex;
-      gap: 2rem;
-      margin-bottom: 1.5rem;
+      gap: 1.5rem;
+      align-items: center;
     }
 
-    .score-box {
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    /* ===== Botões ===== */
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.75rem;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(124, 92, 255, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(124, 92, 255, 0.5);
+    }
+
+    .btn-ghost {
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* ===== Hero ===== */
+    .hero {
+      padding: 6rem 0 5rem;
       text-align: center;
-      background: #16213e;
-      padding: 0.6rem 1.4rem;
-      border-radius: 10px;
-      border: 2px solid #0f3460;
+      position: relative;
+      overflow: hidden;
     }
 
-    .score-box .label {
-      font-size: 0.8rem;
-      color: #aaa;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(124, 92, 255, 0.25), transparent 65%);
+      pointer-events: none;
     }
 
-    .score-box .value {
-      font-size: 1.8rem;
-      font-weight: bold;
-    }
-
-    .score-box.x .value { color: #e94560; }
-    .score-box.draws .value { color: #f5a623; }
-    .score-box.o .value { color: #4ecdc4; }
-
-    .status {
-      font-size: 1.1rem;
-      margin-bottom: 1.2rem;
-      height: 1.6rem;
-      color: #ccc;
-      transition: color 0.3s;
-    }
-
-    .status.x-turn { color: #e94560; }
-    .status.o-turn { color: #4ecdc4; }
-    .status.winner { color: #f5a623; font-weight: bold; font-size: 1.3rem; }
-    .status.draw { color: #aaa; }
-
-    .board {
-      display: grid;
-      grid-template-columns: repeat(3, 110px);
-      grid-template-rows: repeat(3, 110px);
-      gap: 8px;
+    .hero-badge {
+      display: inline-block;
+      padding: 0.35rem 1rem;
+      border-radius: 999px;
+      background: rgba(124, 92, 255, 0.15);
+      border: 1px solid rgba(124, 92, 255, 0.4);
+      color: var(--primary-hover);
+      font-size: 0.85rem;
+      font-weight: 600;
       margin-bottom: 1.5rem;
     }
 
-    .cell {
-      background: #16213e;
-      border: 2px solid #0f3460;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3.2rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.15s, transform 0.1s;
-      user-select: none;
+    .hero h1 {
+      font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.02em;
     }
 
-    .cell:hover:not(.taken) {
-      background: #0f3460;
-      transform: scale(1.04);
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .cell.taken { cursor: default; }
-
-    .cell.x { color: #e94560; }
-    .cell.o { color: #4ecdc4; }
-
-    .cell.win-cell {
-      background: #0f3460;
-      border-color: #f5a623;
-      animation: pulse 0.5s ease;
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 620px;
+      margin: 0 auto 2.5rem;
     }
 
-    @keyframes pulse {
-      0%   { transform: scale(1); }
-      50%  { transform: scale(1.1); }
-      100% { transform: scale(1); }
-    }
-
-    .buttons {
+    .hero-actions {
       display: flex;
       gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
     }
 
-    button {
-      padding: 0.6rem 1.6rem;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: opacity 0.2s, transform 0.1s;
+    /* ===== Recursos ===== */
+    .section {
+      padding: 5rem 0;
     }
 
-    button:hover { opacity: 0.85; transform: scale(1.03); }
-    button:active { transform: scale(0.97); }
-
-    #btn-restart {
-      background: #e94560;
-      color: #fff;
+    .section-title {
+      text-align: center;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      margin-bottom: 0.75rem;
     }
 
-    #btn-reset-score {
-      background: #0f3460;
-      color: #ccc;
-      border: 1px solid #e94560;
+    .section-subtitle {
+      text-align: center;
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto 3.5rem;
     }
 
-    .mode-selector {
-      margin-bottom: 1.2rem;
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius);
+      padding: 2rem;
+      transition: transform 0.25s, border-color 0.25s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(124, 92, 255, 0.5);
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* ===== Depoimentos ===== */
+    .testimonials {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .testimonial {
+      background: var(--surface-2);
+      border-radius: var(--radius);
+      padding: 2rem;
+    }
+
+    .testimonial p {
+      font-style: italic;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+    }
+
+    .testimonial-author {
       display: flex;
-      gap: 0.8rem;
+      align-items: center;
+      gap: 0.75rem;
     }
 
-    .mode-btn {
-      padding: 0.4rem 1.1rem;
-      border: 2px solid #0f3460;
-      border-radius: 20px;
-      background: #16213e;
-      color: #aaa;
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+    }
+
+    .testimonial-author strong {
+      display: block;
+      font-size: 0.95rem;
+    }
+
+    .testimonial-author small {
+      color: var(--muted);
+    }
+
+    /* ===== CTA final ===== */
+    .cta {
+      text-align: center;
+      background: linear-gradient(135deg, rgba(124, 92, 255, 0.18), rgba(255, 92, 138, 0.12));
+      border: 1px solid rgba(124, 92, 255, 0.3);
+      border-radius: calc(var(--radius) * 1.5);
+      padding: 4rem 2rem;
+    }
+
+    .cta h2 {
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      margin-bottom: 1rem;
+    }
+
+    .cta p {
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+
+    /* ===== Rodapé ===== */
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 2.5rem 0;
+      text-align: center;
+      color: var(--muted);
       font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.2s;
     }
 
-    .mode-btn.active {
-      border-color: #e94560;
-      color: #e94560;
-      background: #0f3460;
+    footer a {
+      color: var(--primary-hover);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      .nav-links a:not(.btn) {
+        display: none;
+      }
+
+      .hero {
+        padding: 4rem 0 3.5rem;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Jogo da Velha</h1>
-
-  <div class="mode-selector">
-    <button class="mode-btn active" id="mode-pvp">2 Jogadores</button>
-    <button class="mode-btn" id="mode-ai">vs Computador</button>
-  </div>
-
-  <div class="scoreboard">
-    <div class="score-box x">
-      <div class="label" id="label-x">Jogador X</div>
-      <div class="value" id="score-x">0</div>
+  <header>
+    <div class="container nav">
+      <a href="#" class="logo">✦ <span>Aurora</span></a>
+      <nav class="nav-links">
+        <a href="#recursos">Recursos</a>
+        <a href="#depoimentos">Depoimentos</a>
+        <a href="#contato" class="btn btn-primary" style="padding: 0.5rem 1.25rem; font-size: 0.9rem;">Começar</a>
+      </nav>
     </div>
-    <div class="score-box draws">
-      <div class="label">Empates</div>
-      <div class="value" id="score-draws">0</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <span class="hero-badge">🚀 Novidade — versão 2.0 disponível</span>
+        <h1>Transforme suas ideias<br /><span>em realidade</span></h1>
+        <p>
+          Aurora é a plataforma que ajuda você a tirar projetos do papel com
+          rapidez, simplicidade e o melhor design. Comece gratuitamente em minutos.
+        </p>
+        <div class="hero-actions">
+          <a href="#contato" class="btn btn-primary">Começar agora</a>
+          <a href="#recursos" class="btn btn-ghost">Saiba mais</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="recursos" class="section">
+      <div class="container">
+        <h2 class="section-title">Tudo que você precisa</h2>
+        <p class="section-subtitle">
+          Recursos pensados para acelerar seu trabalho do primeiro rascunho ao lançamento.
+        </p>
+        <div class="features">
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Rápido de verdade</h3>
+            <p>Performance otimizada para que nada fique entre você e o seu resultado.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🎨</div>
+            <h3>Design impecável</h3>
+            <p>Interfaces bonitas e responsivas que funcionam em qualquer dispositivo.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <h3>Seguro por padrão</h3>
+            <p>Seus dados protegidos com as melhores práticas de segurança do mercado.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📈</div>
+            <h3>Cresça sem limites</h3>
+            <p>Uma base sólida que escala junto com o seu projeto, do MVP ao sucesso.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🤝</div>
+            <h3>Suporte dedicado</h3>
+            <p>Time pronto para ajudar sempre que você precisar, sem enrolação.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🎮</div>
+            <h3>Diversão garantida</h3>
+            <p>Faça uma pausa e <a href="./jogo/" style="color: var(--primary-hover);">jogue o nosso jogo da velha</a> quando quiser.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="depoimentos" class="section">
+      <div class="container">
+        <h2 class="section-title">Quem usa, recomenda</h2>
+        <p class="section-subtitle">Veja o que as pessoas estão dizendo.</p>
+        <div class="testimonials">
+          <div class="testimonial">
+            <p>"Coloquei meu projeto no ar em uma tarde. Simplesmente incrível."</p>
+            <div class="testimonial-author">
+              <div class="avatar">M</div>
+              <div>
+                <strong>Mariana Silva</strong>
+                <small>Designer de produto</small>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial">
+            <p>"A melhor decisão que tomei este ano. Recomendo de olhos fechados."</p>
+            <div class="testimonial-author">
+              <div class="avatar">R</div>
+              <div>
+                <strong>Rafael Costa</strong>
+                <small>Desenvolvedor</small>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial">
+            <p>"Suporte excelente e resultado acima do esperado. Nota dez!"</p>
+            <div class="testimonial-author">
+              <div class="avatar">J</div>
+              <div>
+                <strong>Juliana Rocha</strong>
+                <small>Empreendedora</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contato" class="section">
+      <div class="container">
+        <div class="cta">
+          <h2>Pronto para começar?</h2>
+          <p>Junte-se a milhares de pessoas que já estão criando com a Aurora.</p>
+          <a href="mailto:paulovitor.sampaio@gmail.com" class="btn btn-primary">Fale com a gente</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 Aurora. Feito com 💜 — <a href="./jogo/">Jogo da Velha</a></p>
     </div>
-    <div class="score-box o">
-      <div class="label" id="label-o">Jogador O</div>
-      <div class="value" id="score-o">0</div>
-    </div>
-  </div>
-
-  <div class="status" id="status">Vez do Jogador X</div>
-
-  <div class="board" id="board">
-    <div class="cell" data-index="0"></div>
-    <div class="cell" data-index="1"></div>
-    <div class="cell" data-index="2"></div>
-    <div class="cell" data-index="3"></div>
-    <div class="cell" data-index="4"></div>
-    <div class="cell" data-index="5"></div>
-    <div class="cell" data-index="6"></div>
-    <div class="cell" data-index="7"></div>
-    <div class="cell" data-index="8"></div>
-  </div>
-
-  <div class="buttons">
-    <button id="btn-restart">Nova Partida</button>
-    <button id="btn-reset-score">Zerar Placar</button>
-  </div>
-
-  <script>
-    const WINS = [
-      [0,1,2],[3,4,5],[6,7,8],
-      [0,3,6],[1,4,7],[2,5,8],
-      [0,4,8],[2,4,6]
-    ];
-
-    let board = Array(9).fill(null);
-    let currentPlayer = 'X';
-    let gameOver = false;
-    let vsAI = false;
-    let scores = { X: 0, O: 0, draws: 0 };
-
-    const cells = document.querySelectorAll('.cell');
-    const statusEl = document.getElementById('status');
-    const scoreX = document.getElementById('score-x');
-    const scoreO = document.getElementById('score-o');
-    const scoreDraws = document.getElementById('score-draws');
-    const labelO = document.getElementById('label-o');
-
-    document.getElementById('mode-pvp').addEventListener('click', () => setMode(false));
-    document.getElementById('mode-ai').addEventListener('click', () => setMode(true));
-    document.getElementById('btn-restart').addEventListener('click', resetGame);
-    document.getElementById('btn-reset-score').addEventListener('click', resetScore);
-
-    cells.forEach(cell => {
-      cell.addEventListener('click', () => handleClick(parseInt(cell.dataset.index)));
-    });
-
-    function setMode(ai) {
-      vsAI = ai;
-      document.getElementById('mode-pvp').classList.toggle('active', !ai);
-      document.getElementById('mode-ai').classList.toggle('active', ai);
-      labelO.textContent = ai ? 'Computador' : 'Jogador O';
-      resetGame();
-    }
-
-    function handleClick(index) {
-      if (gameOver || board[index]) return;
-      if (vsAI && currentPlayer === 'O') return;
-      makeMove(index);
-      if (vsAI && !gameOver && currentPlayer === 'O') {
-        setTimeout(aiMove, 400);
-      }
-    }
-
-    function makeMove(index) {
-      board[index] = currentPlayer;
-      const cell = cells[index];
-      cell.textContent = currentPlayer;
-      cell.classList.add('taken', currentPlayer.toLowerCase());
-
-      const winLine = checkWin();
-      if (winLine) {
-        winLine.forEach(i => cells[i].classList.add('win-cell'));
-        const winner = currentPlayer === 'X' ? 'Jogador X' : (vsAI ? 'Computador' : 'Jogador O');
-        setStatus(`${winner} venceu!`, 'winner');
-        scores[currentPlayer]++;
-        updateScore();
-        gameOver = true;
-        return;
-      }
-      if (board.every(v => v)) {
-        setStatus('Empate!', 'draw');
-        scores.draws++;
-        updateScore();
-        gameOver = true;
-        return;
-      }
-      currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-      const nextLabel = currentPlayer === 'X' ? 'Jogador X' : (vsAI ? 'Computador' : 'Jogador O');
-      setStatus(`Vez d${currentPlayer === 'X' ? 'o Jogador X' : (vsAI ? 'o Computador' : 'o Jogador O')}`,
-        currentPlayer === 'X' ? 'x-turn' : 'o-turn');
-    }
-
-    function checkWin() {
-      return WINS.find(line => {
-        const [a,b,c] = line;
-        return board[a] && board[a] === board[b] && board[a] === board[c];
-      }) || null;
-    }
-
-    function aiMove() {
-      const move = getBestMove();
-      makeMove(move);
-    }
-
-    function getBestMove() {
-      // Try to win
-      for (let i = 0; i < 9; i++) {
-        if (!board[i]) {
-          board[i] = 'O';
-          if (checkWin()) { board[i] = null; return i; }
-          board[i] = null;
-        }
-      }
-      // Block X
-      for (let i = 0; i < 9; i++) {
-        if (!board[i]) {
-          board[i] = 'X';
-          if (checkWin()) { board[i] = null; return i; }
-          board[i] = null;
-        }
-      }
-      // Center
-      if (!board[4]) return 4;
-      // Corners
-      const corners = [0,2,6,8].filter(i => !board[i]);
-      if (corners.length) return corners[Math.floor(Math.random() * corners.length)];
-      // Any empty
-      const empties = board.map((v,i) => v ? null : i).filter(v => v !== null);
-      return empties[Math.floor(Math.random() * empties.length)];
-    }
-
-    function setStatus(text, cls) {
-      statusEl.textContent = text;
-      statusEl.className = 'status ' + (cls || '');
-    }
-
-    function updateScore() {
-      scoreX.textContent = scores.X;
-      scoreO.textContent = scores.O;
-      scoreDraws.textContent = scores.draws;
-    }
-
-    function resetGame() {
-      board = Array(9).fill(null);
-      currentPlayer = 'X';
-      gameOver = false;
-      cells.forEach(cell => {
-        cell.textContent = '';
-        cell.className = 'cell';
-      });
-      setStatus('Vez do Jogador X', 'x-turn');
-    }
-
-    function resetScore() {
-      scores = { X: 0, O: 0, draws: 0 };
-      updateScore();
-      resetGame();
-    }
-
-    // Init
-    setStatus('Vez do Jogador X', 'x-turn');
-  </script>
+  </footer>
 </body>
 </html>
